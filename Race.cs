@@ -8,6 +8,7 @@ namespace RaceManager
 {
     internal class Race
     {
+        private static int raceCounter = 1;
         private String raceName;
         private DateTime startTime;
         private List<Horse> horseList;
@@ -22,16 +23,16 @@ namespace RaceManager
         }
         public Race()
         {
-            raceName = "Unkown";
+            raceName = $"Race {raceCounter++}";
             startTime = DateTime.Now;
             horseList = new List<Horse>();
         }
 
-        public Race(string raceName, DateTime startTime)
+        public Race(string raceName, DateTime startTime, List<Horse> horses)
         {
-            this.raceName = raceName;
+            this.raceName = string.IsNullOrEmpty(raceName) ? $"Race {raceCounter++}" : raceName; ;
             this.startTime = startTime;
-            horseList = new List<Horse>();
+            horseList = horses;
         }
 
         public bool AddHorse(Horse horse)

@@ -34,12 +34,12 @@ namespace RaceManager
             numberOfRaces = 0;
             races = new List<Race>();
         }
-        public Event(string name, string location, int numberOfRaces)
+        public Event(string name, string location, int numberOfRaces, List<Race> Races)
         {
             Name = name;
             Location = location;
             NumberOfRaces = numberOfRaces;
-            races= new List<Race>();
+            races= Races;
         }
 
         public bool AddRace(Race race)
