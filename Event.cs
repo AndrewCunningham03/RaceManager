@@ -53,10 +53,27 @@ namespace RaceManager
             return false;
         }
 
-        public List<Race> Races
+        public List<Race> Racelist
         {
             get { return races; }
         }
+        public List<Horse> listOfHorsesForByRaceName(String raceName)
+        {
+            List<Horse> list = new List<Horse>();
+            for (int i = 0; i < races.Count; i++)
+            {
+                if (races[i].RaceName.Equals(raceName))
+                {
+                    foreach (Horse horse in races[i].HorseList)
+                    {
+                        list.Add(horse);
+                    }
+                }
+            }
+            return list;
+        }
+
+
 
         public override String ToString()
         {
