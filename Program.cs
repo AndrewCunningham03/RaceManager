@@ -1,4 +1,7 @@
-﻿namespace RaceManager
+﻿using NPOI.OpenXmlFormats.Dml;
+using System.Diagnostics;
+
+namespace RaceManager
 {
     internal class Program
     {
@@ -81,7 +84,47 @@
             events.Add(event2);
             events.Add(event3);
 
+            bool showMenu = true;
+            while (showMenu)
+            {
+                showMenu = MainMenu();
+            }
+        }
+        static void RacegoerMenu()
+        {
+            if (events.Count == 0)
+            {
+                Console.WriteLine("No events are available at this time.");
+                return;
+            }
+            
         }
 
+        private static bool MainMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("1. Racegoer");
+            Console.WriteLine("2. Horse Owner");
+            Console.WriteLine("3. Racecourse/Event Manager");
+            Console.WriteLine("4. Exit");
+            Console.Write("\r\nSelect an option: ");
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    RacegoerMenu();
+                    return true;
+                case "2":
+                    return true;
+                case "3":
+                    return true;
+                case "4":
+                    return false;
+                default:
+                    return true;
+            }
+        }
+
+            
     }
 }

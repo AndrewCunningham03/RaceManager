@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.IO.RecyclableMemoryStreamManager;
 
 namespace RaceManager
 {
@@ -21,6 +22,12 @@ namespace RaceManager
             get { return startTime; }
             set { startTime = value; }
         }
+
+        internal List<Horse> HorseList { 
+            get { return horseList; }
+            set { horseList = value; }
+             }
+
         public Race()
         {
             raceName = $"Race {raceCounter++}";
@@ -44,6 +51,7 @@ namespace RaceManager
             }
             return false;
         }
+        
 
         public override String ToString()
         {
