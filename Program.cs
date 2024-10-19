@@ -266,9 +266,25 @@ namespace RaceManager
                 }
                 Console.WriteLine("Enter horse name");
                 String horseName = Console.ReadLine();
-                Console.WriteLine("Enter horse age");
-                String horseAgeString = Console.ReadLine();
-                int horseAge = int.Parse(horseAgeString);
+                int horseAge = 0;
+                while (horseAge < 1 || horseAge > 50)
+                {
+                    Console.WriteLine("Enter horse age (must be between 1 and 50):");
+                    String horseAgeString = Console.ReadLine();
+
+                    // Try to parse the age, if invalid prompt the user again
+                    if (int.TryParse(horseAgeString, out horseAge))
+                    {
+                        if (horseAge < 1 || horseAge > 50)
+                        {
+                            Console.WriteLine("Invalid age. Please enter a number between 1 and 50.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid number.");
+                    }
+                }
                 Console.WriteLine("Enter horse ID");
                 String horseID = Console.ReadLine();
                 Console.WriteLine("Enter owners name");
@@ -380,9 +396,25 @@ namespace RaceManager
 
                                     Console.WriteLine("Enter horse name");
                                     String horseName = Console.ReadLine();
-                                    Console.WriteLine("Enter horse age");
-                                    String horseAgeString = Console.ReadLine();
-                                    int horseAge = int.Parse(horseAgeString);
+                                    int horseAge = 0;
+                                    while (horseAge < 1 || horseAge > 50)
+                                    {
+                                        Console.WriteLine("Enter horse age (must be between 1 and 50):");
+                                        String horseAgeString = Console.ReadLine();
+
+                                        // Try to parse the age, if invalid prompt the user again
+                                        if (int.TryParse(horseAgeString, out horseAge))
+                                        {
+                                            if (horseAge < 1 || horseAge > 50)
+                                            {
+                                                Console.WriteLine("Invalid age. Please enter a number between 1 and 50.");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Invalid input. Please enter a valid number.");
+                                        }
+                                    }
                                     Console.WriteLine("Enter horse ID");
                                     String horseID = Console.ReadLine();
                                     Console.WriteLine("Enter owners name");
@@ -405,9 +437,9 @@ namespace RaceManager
                         done = true;
                     }
                 }
-                Event newevent = new Event(name, location, raceList.Count, raceList);
-                events.Add(newevent);
-                Console.WriteLine($"New event has been added:{newevent.Name}");
+                 Event newevent = new Event(name, location, raceList.Count, raceList);
+                    events.Add(newevent);
+                    Console.WriteLine($"New event has been added:{newevent.Name}");
             }
                 static void AddRaceToAnEvent()
                 {
@@ -453,9 +485,25 @@ namespace RaceManager
 
                                 Console.WriteLine("Enter horse name");
                                 String horseName = Console.ReadLine();
-                                Console.WriteLine("Enter horse age");
-                                String horseAgeString = Console.ReadLine();
-                                int horseAge = int.Parse(horseAgeString);
+                                int horseAge = 0;
+                                while (horseAge < 1 || horseAge > 50)
+                                {
+                                    Console.WriteLine("Enter horse age (must be between 1 and 50):");
+                                    String horseAgeString = Console.ReadLine();
+
+                                    // Try to parse the age, if invalid prompt the user again
+                                    if (int.TryParse(horseAgeString, out horseAge))
+                                    {
+                                        if (horseAge < 1 || horseAge > 50)
+                                        {
+                                            Console.WriteLine("Invalid age. Please enter a number between 1 and 50.");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Invalid input. Please enter a valid number.");
+                                    }
+                                }
                                 Console.WriteLine("Enter horse ID");
                                 String horseID = Console.ReadLine();
                                 Console.WriteLine("Enter owners name");
