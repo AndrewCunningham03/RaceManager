@@ -61,12 +61,12 @@ namespace RaceManager
             horseListSix.Add(horse17);
             horseListSix.Add(horse18);
 
-            Race r1 = new Race("race 1", new DateTime(2024, 3, 25, 12, 20, 0),horseListOne);
-            Race r2 = new Race("Race 2", new DateTime(2024, 3, 25, 13, 0, 0),horseListTwo);
-            Race r3 = new Race("Race 3", new DateTime(2024, 5, 25, 13, 30, 0),horseListThree);
-            Race r4 = new Race("Race 4", new DateTime(2024, 5, 25, 14, 0, 0),horseListFour);
-            Race r5 = new Race("Race 5", new DateTime(2024, 10, 25, 14, 45, 0),horseListFive);
-            Race r6 = new Race("Race 6", new DateTime(2024, 10, 25, 15, 30, 0),horseListSix);
+            Race r1 = new Race("race 1", new DateTime(2024, 3, 25, 12, 20, 0), horseListOne);
+            Race r2 = new Race("Race 2", new DateTime(2024, 3, 25, 13, 0, 0), horseListTwo);
+            Race r3 = new Race("Race 3", new DateTime(2024, 5, 25, 13, 30, 0), horseListThree);
+            Race r4 = new Race("Race 4", new DateTime(2024, 5, 25, 14, 0, 0), horseListFour);
+            Race r5 = new Race("Race 5", new DateTime(2024, 10, 25, 14, 45, 0), horseListFive);
+            Race r6 = new Race("Race 6", new DateTime(2024, 10, 25, 15, 30, 0), horseListSix);
 
 
             races.Add(r1);
@@ -98,7 +98,6 @@ namespace RaceManager
                 array[0] = "1. Racegoer";
                 array[1] = "2. Horse Owner";
                 array[2] = "3. Racecourse/Event Manager";
-                array[3] = "4. Exit";
 
                 for (int i = 0; i < array.Length; i++)
                 {
@@ -124,165 +123,359 @@ namespace RaceManager
                             HorseOwnerMenu();
                             break;
                         case 3:
+                            RaceManagerMenu();
                             break;
                         case 4:
+                            Console.WriteLine("Exiting.....");
                             break;
                         default:
                             Console.WriteLine("Invalid option, please try again.");
                             break;
                     }
                 }
+            }
 
 
 
-                static void RacegoerMenu()
+            static void RacegoerMenu()
+            {
+                int num = 0;
+                while (num != 3)
                 {
-                    int num = 0;
-                    while (num != 3)
+                    String[] array = new String[3];
+
+                    array[0] = "1. View all events";
+                    array[1] = "2. Enter name of Event to view Races and the horses";
+                    array[2] = "3. Exit";
+
+                    for (int i = 0; i < array.Length; i++)
                     {
-                        String[] array = new String[3];
-
-                        array[0] = "1. View all events";
-                        array[1] = "2. Enter name of Event to view Races and the horses";
-                        array[2] = "3. Exit";
-
-                        for (int i = 0; i < array.Length; i++)
-                        {
-                            Console.WriteLine(array[i]);
-                        }
-                        Console.WriteLine("Enter a number");
-                        String intput = Console.ReadLine();
-
-                        num = int.Parse(intput);
-
-                        if (num <= 0 || num > array.Length)
-                        {
-                            Console.WriteLine("Number is not on menu");
-                        }
-
-
-                        switch (num)
-                        {
-                            case 1:
-                                AllEvents();
-                                break;
-                            case 2:
-                                AllEvents();
-                                Console.WriteLine("Enter event name of races you want to view");
-                                String eventName = Console.ReadLine();
-                                Event selectedEvent = events.FirstOrDefault(x => x.Name == eventName);
-                                if (selectedEvent == null)
-                                {
-                                    Console.WriteLine("Event not found.Please re-enter");
-                                    return;
-                                }
-                                Console.WriteLine($"Races for the event: {selectedEvent.Name}");
-                                if (selectedEvent.NumberOfRaces == 0)
-                                {
-                                    Console.WriteLine("No races available for this event.");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Races in this event:");
-                                    foreach (Race race in selectedEvent.Racelist)
-                                    {
-                                        Console.WriteLine(race.ToString());
-
-                                        if (race.HorseList.Count == 0)
-                                        {
-                                            Console.WriteLine("No horses are entered in this race.");
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Horses in this race:");
-                                            foreach (Horse horse in race.HorseList)
-                                            {
-                                                Console.WriteLine(horse.ToString());
-                                            }
-                                        }
-                                    }
-                                }
-                                break;
-                            case 3:
-                                Console.WriteLine("Signing out...");
-                                break;
-                            default:
-                                break;
-                        }
-
+                        Console.WriteLine(array[i]);
                     }
+                    Console.WriteLine("Enter a number");
+                    String intput = Console.ReadLine();
+
+                    num = int.Parse(intput);
+
+                    if (num <= 0 || num > array.Length)
+                    {
+                        Console.WriteLine("Number is not on menu");
+                    }
+
+
+                    switch (num)
+                    {
+                        case 1:
+                            AllEvents();
+                            break;
+                        case 2:
+                            AllEvents();
+                            DisplayAllRacesAndHorsesForEvent();
+                            break;
+                        case 3:
+                            Console.WriteLine("Signing out...");
+                            break;
+                        default:
+                            break;
+                    }
+
                 }
-                    //display all events
-                    static void AllEvents()
+            }
+            //display all events
+            static void AllEvents()
+            {
+                if (events.Count == 0)
+                {
+                    Console.WriteLine("There are no events available at this time");
+                }
+                for (int i = 0; i < events.Count; i++)
+                {
+                    Console.WriteLine(events[i].ToString());
+                }
+            }
+            static void DisplayAllRacesAndHorsesForEvent()
+            {
+                Console.WriteLine("Enter event name of races you want to view");
+                String eventName = Console.ReadLine();
+                Event selectedEvent = events.FirstOrDefault(x => x.Name == eventName);
+                if (selectedEvent == null)
+                {
+                    Console.WriteLine("Event not found.Please re-enter");
+                    return;
+                }
+                Console.WriteLine($"Races for the event: {selectedEvent.Name}");
+                if (selectedEvent.NumberOfRaces == 0)
+                {
+                    Console.WriteLine("No races available for this event.");
+                }
+                else
+                {
+                    Console.WriteLine("Races in this event:");
+                    foreach (Race race in selectedEvent.Racelist)
                     {
-                        if (events.Count == 0)
+                        Console.WriteLine(race.ToString());
+
+                        if (race.HorseList.Count == 0)
                         {
-                            Console.WriteLine("There are no events available at this time");
-                        }
-                        for (int i = 0; i < events.Count; i++)
-                        {
-                            Console.WriteLine(events[i].ToString());
-                        }
-                    }
-                    static void HorseOwnerMenu()
-                    {
-                        AllEvents();
-                        Console.WriteLine("Enter name of event you would like to your horse to");
-                        String eventName = Console.ReadLine();
-                        Event selectedEvent = events.FirstOrDefault(x => x.Name == eventName);
-                        if (selectedEvent == null)
-                        {
-                            Console.WriteLine("Event not found.Please re-enter");
-                            return;
-                        }
-                        Console.WriteLine($"Races for the event: {selectedEvent.Name}");
-                        if (selectedEvent.NumberOfRaces == 0)
-                        {
-                            Console.WriteLine("No races available for this event.");
+                            Console.WriteLine("No horses are entered in this race.");
                         }
                         else
                         {
-                            Console.WriteLine("Races in this event:");
-                            foreach (Race race in selectedEvent.Racelist)
+                            Console.WriteLine("Horses in this race:");
+                            foreach (Horse horse in race.HorseList)
                             {
-                                Console.WriteLine(race.ToString());
+                                Console.WriteLine(horse.ToString());
                             }
                         }
-                        Console.WriteLine("Enter name of race you want to enter horse into");
-                        String raceName = Console.ReadLine();
+                    }
+                }
+            }
+            static void HorseOwnerMenu()
+            {
+                AllEvents();
+                Console.WriteLine("Enter name of event you would like to your horse to");
+                String eventName = Console.ReadLine();
+                Event selectedEvent = events.FirstOrDefault(x => x.Name == eventName);
+                if (selectedEvent == null)
+                {
+                    Console.WriteLine("Event not found.Please re-enter");
+                    return;
+                }
+                Console.WriteLine($"Races for the event: {selectedEvent.Name}");
+                if (selectedEvent.NumberOfRaces == 0)
+                {
+                    Console.WriteLine("No races available for this event.");
+                }
+                else
+                {
+                    Console.WriteLine("Races in this event:");
+                    foreach (Race race in selectedEvent.Racelist)
+                    {
+                        Console.WriteLine(race.ToString());
+                    }
+                }
+                Console.WriteLine("Enter name of race you want to enter horse into");
+                String raceName = Console.ReadLine();
 
-                        Race selectRace = selectedEvent.Racelist.FirstOrDefault(r => r.RaceName == raceName);
+                Race selectRace = selectedEvent.Racelist.FirstOrDefault(r => r.RaceName == raceName);
 
-                        if (selectRace == null)
-                        {
-                            Console.WriteLine("Race not found.Please re-enter");
-                            return;
-                        }
-                        Console.WriteLine("Enter horse name");
-                        String horseName = Console.ReadLine();
-                        Console.WriteLine("Enter horse age");
-                        String horseAgeString = Console.ReadLine();
-                        int horseAge = int.Parse(horseAgeString);
-                        Console.WriteLine("Enter horse ID");
-                        String horseID = Console.ReadLine();
-                        Console.WriteLine("Enter owners name");
-                        String ownersName = Console.ReadLine();
-                        Console.WriteLine("Enter jockey name");
-                        String jockey = Console.ReadLine();
+                if (selectRace == null)
+                {
+                    Console.WriteLine("Race not found.Please re-enter");
+                    return;
+                }
+                Console.WriteLine("Enter horse name");
+                String horseName = Console.ReadLine();
+                Console.WriteLine("Enter horse age");
+                String horseAgeString = Console.ReadLine();
+                int horseAge = int.Parse(horseAgeString);
+                Console.WriteLine("Enter horse ID");
+                String horseID = Console.ReadLine();
+                Console.WriteLine("Enter owners name");
+                String ownersName = Console.ReadLine();
+                Console.WriteLine("Enter jockey name");
+                String jockey = Console.ReadLine();
 
-                        Horse horse = new Horse(horseName, horseAge, horseID, ownersName, jockey);
+                Horse horse = new Horse(horseName, horseAge, horseID, ownersName, jockey);
 
-                        selectRace.AddHorse(horse);
+                selectRace.AddHorse(horse);
 
-                        Console.WriteLine($"Horse {horse.Name} has been added to {selectRace.RaceName}, in {selectedEvent.Name}");
+                Console.WriteLine($"Horse {horse.Name} has been added to {selectRace.RaceName}, in {selectedEvent.Name}");
+            }
+            static void RaceManagerMenu()
+            {
+                int num = 0;
+                while (num != 6)
+                {
+                    String[] array = new String[6];
+
+                    array[0] = "1. View all events";
+                    array[1] = "2. Enter name of Event to view Races and the horses";
+                    array[2] = "3. Add event";
+                    array[3] = "4. Add race to an event";
+                    array[4] = "5. Add a horse or multiple horses";
+                    array[5] = "6. Sign out";
+
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        Console.WriteLine(array[i]);
+                    }
+                    Console.WriteLine("Enter a number");
+                    String intput = Console.ReadLine();
+
+                    num = int.Parse(intput);
+
+                    if (num <= 0 || num > array.Length)
+                    {
+                        Console.WriteLine("Number is not on menu");
                     }
 
 
-
-
-
+                    switch (num)
+                    {
+                        case 1:
+                            AllEvents();
+                            break;
+                        case 2:
+                            AllEvents();
+                            DisplayAllRacesAndHorsesForEvent();
+                            break;
+                        case 3:
+                            CreateEvent();
+                            break;
+                        case 4:
+                            AddRaceToAnEvent();
+                            break;
+                        case 5:
+                            HorseOwnerMenu();
+                            break;
+                        case 6:
+                            Console.WriteLine("Signing out....");
+                            break;
+                    }
 
                 }
+            }
+            static void CreateEvent()
+            {
+                List<Race> raceList = new List<Race>();
+
+                Console.Write("Enter event name: ");
+                string name = Console.ReadLine();
+                Console.Write("Enter location: ");
+                string location = Console.ReadLine();
+                Console.WriteLine("Would you like to add races to this event now? Yes/No");
+                String answer = Console.ReadLine();
+                if (answer.Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                {
+                    bool done = false;
+                    while (!done)
+                    {
+
+                        Console.WriteLine("How many races would you like to add");
+                        String numberOfRaces = Console.ReadLine();
+                        int numberOfRacesAnswer = int.Parse(numberOfRaces);
+                        for (int i = 0; i < numberOfRacesAnswer; i++)
+                        {
+                            List<Horse> horseList = new List<Horse>();
+
+                            Console.WriteLine("Enter race name");
+                            String race = Console.ReadLine();
+                            Console.WriteLine("Enter date and time (yyyy-MM-dd HH:mm:ss)");
+                            String date = Console.ReadLine();
+                            DateTime dateTime;
+                            DateTime.TryParse(date, out dateTime);
+                            Console.WriteLine("Would you like to add a list of horses to this Race? Yes/No");
+                            String answer2 = Console.ReadLine();
+
+                            if (answer2.Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                            {
+
+                                Console.WriteLine("how many horses would you like to add");
+                                String numberOfHorses = Console.ReadLine();
+                                int numberOfHorsesAnswer = int.Parse(numberOfHorses);
+                                for (int j = 0; j < numberOfHorsesAnswer; j++)
+                                {
+
+
+                                    Console.WriteLine("Enter horse name");
+                                    String horseName = Console.ReadLine();
+                                    Console.WriteLine("Enter horse age");
+                                    String horseAgeString = Console.ReadLine();
+                                    int horseAge = int.Parse(horseAgeString);
+                                    Console.WriteLine("Enter horse ID");
+                                    String horseID = Console.ReadLine();
+                                    Console.WriteLine("Enter owners name");
+                                    String ownersName = Console.ReadLine();
+                                    Console.WriteLine("Enter jockey name");
+                                    String jockey = Console.ReadLine();
+
+                                    Horse horse = new Horse(horseName, horseAge, horseID, ownersName, jockey);
+                                    horseList.Add(horse);
+                                }
+                            }
+                                Race newRace = new Race(race, dateTime, horseList);
+                                raceList.Add(newRace);
+
+
+                            
+
+                            
+                        }
+                        done = true;
+                    }
+                }
+                Event newevent = new Event(name, location, raceList.Count, raceList);
+                events.Add(newevent);
+                Console.WriteLine($"New event has been added:{newevent.Name}");
+            }
+                static void AddRaceToAnEvent()
+                {
+                    
+                    
+                    Console.WriteLine("Enter event name you want to add a race to");
+                    String eventName = Console.ReadLine();
+                    Event selectedEvent = events.FirstOrDefault(x => x.Name == eventName);
+                    if (selectedEvent == null)
+                    {
+                        Console.WriteLine("Event not found.Please re-enter");
+                        return;
+                    }
+                    bool done = false;
+                while (!done)
+                {
+
+                    Console.WriteLine("How many races would you like to add");
+                    String numberOfRaces = Console.ReadLine();
+                    int numberOfRacesAnswer = int.Parse(numberOfRaces);
+                    for (int i = 0; i < numberOfRacesAnswer; i++)
+                    {
+                        List<Horse> horseList = new List<Horse>();
+
+                        Console.WriteLine("Enter race name");
+                        String race = Console.ReadLine();
+                        Console.WriteLine("Enter date and time (yyyy-MM-dd HH:mm:ss)");
+                        String date = Console.ReadLine();
+                        DateTime dateTime;
+                        DateTime.TryParse(date, out dateTime);
+                        Console.WriteLine("Would you like to add a list of horses to this Race? Yes/No");
+                        String answer2 = Console.ReadLine();
+
+                        if (answer2.Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                        {
+
+                            Console.WriteLine("How many horses would you like to add");
+                            String numberOfHorses = Console.ReadLine();
+                            int numberOfHorsesAnswer = int.Parse(numberOfHorses);
+                            for (int j = 0; j < numberOfHorsesAnswer; j++)
+                            {
+
+
+                                Console.WriteLine("Enter horse name");
+                                String horseName = Console.ReadLine();
+                                Console.WriteLine("Enter horse age");
+                                String horseAgeString = Console.ReadLine();
+                                int horseAge = int.Parse(horseAgeString);
+                                Console.WriteLine("Enter horse ID");
+                                String horseID = Console.ReadLine();
+                                Console.WriteLine("Enter owners name");
+                                String ownersName = Console.ReadLine();
+                                Console.WriteLine("Enter jockey name");
+                                String jockey = Console.ReadLine();
+
+                                Horse horse = new Horse(horseName, horseAge, horseID, ownersName, jockey);
+                                horseList.Add(horse);
+                            }
+                        }
+                            Race newRace = new Race(race, dateTime, horseList);
+                            selectedEvent.AddRace(newRace);
+                            Console.WriteLine($"New race has been added:{selectedEvent.Name}, racename is {newRace.RaceName}");
+
+                        }
+                        done = true;
+                    }
+                }
+
             }
         }
     }
