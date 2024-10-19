@@ -272,7 +272,7 @@ namespace RaceManager
                     Console.WriteLine("Enter horse age (must be between 1 and 50):");
                     String horseAgeString = Console.ReadLine();
 
-                    // Try to parse the age, if invalid prompt the user again
+                    
                     if (int.TryParse(horseAgeString, out horseAge))
                     {
                         if (horseAge < 1 || horseAge > 50)
@@ -402,7 +402,7 @@ namespace RaceManager
                                         Console.WriteLine("Enter horse age (must be between 1 and 50):");
                                         String horseAgeString = Console.ReadLine();
 
-                                        // Try to parse the age, if invalid prompt the user again
+                                        
                                         if (int.TryParse(horseAgeString, out horseAge))
                                         {
                                             if (horseAge < 1 || horseAge > 50)
@@ -491,7 +491,7 @@ namespace RaceManager
                                     Console.WriteLine("Enter horse age (must be between 1 and 50):");
                                     String horseAgeString = Console.ReadLine();
 
-                                    // Try to parse the age, if invalid prompt the user again
+                                    
                                     if (int.TryParse(horseAgeString, out horseAge))
                                     {
                                         if (horseAge < 1 || horseAge > 50)

@@ -35,12 +35,13 @@ namespace RaceManager
             horseList = new List<Horse>();
         }
 
-        public Race(string raceName, DateTime startTime, List<Horse> horses)
+        public Race(string raceName, DateTime startTime,List<Horse> horse)
         {
             this.raceName = string.IsNullOrEmpty(raceName) ? $"Race {raceCounter++}" : raceName; ;
             this.startTime = startTime;
-            horseList = horses;
+            horseList = horse;
         }
+
 
         public bool AddHorse(Horse horse)
         {
