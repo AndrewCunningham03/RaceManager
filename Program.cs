@@ -1,5 +1,8 @@
-﻿using NPOI.OpenXmlFormats.Dml;
+﻿using com.sun.org.apache.xml.@internal.resolver.helpers;
+using NPOI.OpenXmlFormats.Dml;
 using System.Diagnostics;
+using static com.sun.tools.@internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+using static RaceManager.User;
 
 namespace RaceManager
 {
@@ -10,8 +13,12 @@ namespace RaceManager
         static List<Race> racesTwo = new List<Race>();
         static List<Race> racesThree = new List<Race>();
 
+        
+
         static void Main(string[] args)
         {
+            UserManager user = new UserManager();
+
             Horse horse1 = new Horse("Wizard of odds", 4, "WOO2022", "Heaney Group", "Eoin Powell");
             Horse horse2 = new Horse("Midnight Runner", 7, "MR2019", "Riley Farms", "Liam O'Connor");
             Horse horse3 = new Horse("Blazing Fury", 5, "BF2021", "McCarthy Racing", "Paul McGrath");
@@ -90,14 +97,13 @@ namespace RaceManager
 
 
             int num = 0;
-            while (num != 4)
+            while (num != 2)
             {
-                String[] array = new string[4];
+                String[] array = new String[2];
 
+                array[0] = "1. Register";
+                array[1] = "2. Sign in";
 
-                array[0] = "1. Racegoer";
-                array[1] = "2. Horse Owner";
-                array[2] = "3. Racecourse/Event Manager";
 
                 for (int i = 0; i < array.Length; i++)
                 {
@@ -113,30 +119,67 @@ namespace RaceManager
                     Console.WriteLine("Number is not on menu");
                 }
 
+
+                switch (num)
                 {
-                    switch (num)
-                    {
-                        case 1:
-                            RacegoerMenu();
-                            break;
-                        case 2:
-                            HorseOwnerMenu();
-                            break;
-                        case 3:
-                            RaceManagerMenu();
-                            break;
-                        case 4:
-                            Console.WriteLine("Exiting.....");
-                            break;
-                        default:
-                            Console.WriteLine("Invalid option, please try again.");
-                            break;
-                    }
-                }
+                    case 1:
+                        if (UserManager.RegisterUser(user))
+                        {
+                            if (UserManager.Login(user))
+                            {
+                                switch (user.Type)
+                                {
+                                    case UserType.Racegoer:
+                                        RacegoerMenu();
+                                        break;
+                                    case UserType.HorseOwner:
+                                        HorseOwnerMenu();
+                                        break;
+                                    case UserType.RaceManager:
+                                        RaceManagerMenu();
+                                        break;
+                                    default:
+                                        Console.WriteLine("Unknown user type.");
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Login failed. Please check your email and password.");
+                            }
+
+                        }
+                        break;
+                    case 2:
+                        if (UserManager.Login(user))
+                        {
+                            switch (user.Type)
+                            {
+                                case UserType.Racegoer:
+                                    RacegoerMenu();
+                                    break;
+                                case UserType.HorseOwner:
+                                    HorseOwnerMenu();
+                                    break;
+                                case UserType.RaceManager:
+                                    RaceManagerMenu();
+                                    break;
+                                default:
+                                    Console.WriteLine("Unknown user type.");
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Login failed. Please check your email and password.");
+                        }
+                break;
+                    case 6:
+                        Console.WriteLine("Please select Number 1 or 2");
+                        break;
+                
             }
-
-
-
+            }
             static void RacegoerMenu()
             {
                 int num = 0;
@@ -146,7 +189,7 @@ namespace RaceManager
 
                     array[0] = "1. View all events";
                     array[1] = "2. Enter name of Event to view Races and the horses";
-                    array[2] = "3. Exit";
+                    array[2] = "3. Sign out";
 
                     for (int i = 0; i < array.Length; i++)
                     {
@@ -181,7 +224,7 @@ namespace RaceManager
 
                 }
             }
-            //display all events
+            
             static void AllEvents()
             {
                 if (events.Count == 0)
@@ -197,7 +240,7 @@ namespace RaceManager
             {
                 Console.WriteLine("Enter event name of races you want to view");
                 String eventName = Console.ReadLine();
-                Event selectedEvent = events.FirstOrDefault(x => x.Name == eventName);
+                Event selectedEvent = events.FirstOrDefault(x => x.Name.ToLower() == eventName.ToLower());
                 if (selectedEvent == null)
                 {
                     Console.WriteLine("Event not found.Please re-enter");
@@ -235,7 +278,7 @@ namespace RaceManager
                 AllEvents();
                 Console.WriteLine("Enter name of event you would like to your horse to");
                 String eventName = Console.ReadLine();
-                Event selectedEvent = events.FirstOrDefault(x => x.Name == eventName);
+                Event selectedEvent = events.FirstOrDefault(x => x.Name.ToLower() == eventName.ToLower());
                 if (selectedEvent == null)
                 {
                     Console.WriteLine("Event not found.Please re-enter");
@@ -257,7 +300,7 @@ namespace RaceManager
                 Console.WriteLine("Enter name of race you want to enter horse into");
                 String raceName = Console.ReadLine();
 
-                Race selectRace = selectedEvent.Racelist.FirstOrDefault(r => r.RaceName == raceName);
+                Race selectRace = selectedEvent.Racelist.FirstOrDefault(r => r.RaceName.ToLower() == raceName.ToLower());
 
                 if (selectRace == null)
                 {
@@ -447,7 +490,7 @@ namespace RaceManager
                     
                     Console.WriteLine("Enter event name you want to add a race to");
                     String eventName = Console.ReadLine();
-                    Event selectedEvent = events.FirstOrDefault(x => x.Name == eventName);
+                    Event selectedEvent = events.FirstOrDefault(x => x.Name.ToLower() == eventName.ToLower());
                     if (selectedEvent == null)
                     {
                         Console.WriteLine("Event not found.Please re-enter");
@@ -523,7 +566,6 @@ namespace RaceManager
                         done = true;
                     }
                 }
-
-            }
+        }
         }
     }

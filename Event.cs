@@ -86,5 +86,6 @@ namespace RaceManager
         {
             return $"Event name: {name}, Location: {location}, Number of races {numberOfRaces}";
         }
+
     }
 }

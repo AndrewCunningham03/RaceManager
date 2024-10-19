@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static com.sun.tools.@internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 
 namespace RaceManager
 {
@@ -13,9 +14,9 @@ namespace RaceManager
     {
         public enum UserType
         {
-            Racegoer,
-            HorseOwner,
-            RaceManager
+            Racegoer = 1,
+            HorseOwner = 2 ,
+            RaceManager = 3
         }
         private String email;
         private String password;
@@ -55,5 +56,6 @@ namespace RaceManager
                 return Convert.ToBase64String(hashBytes);
             }
         }
+       
     }
 }

@@ -4,25 +4,58 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static RaceManager.User;
 
 namespace RaceManager
 {
-    internal class UserManager
+    internal class UserManager:User
     {
-        private string filePath = "users.txt";
 
-        User user = new User();
-
-        public void RegisterUser(User user)
+        public static bool RegisterUser(User user)
         {
-            string userData = $"{user.Email},{user.HashPassword},{user.Type}";
-            File.AppendAllText(filePath, userData + Environment.NewLine);
-        }
+            Console.WriteLine("Enter email:");
+            string email = Console.ReadLine();
 
+            Console.WriteLine("Enter password:");
+            string password = Console.ReadLine();
+
+            Console.WriteLine("Select user type (1: Racegoer, 2: Horse Owner, 3: Racecourse/Event Manager):");
+            int userTypeInput = int.Parse(Console.ReadLine());
+            UserType userType = (UserType)(userTypeInput - 1);
+
+            string passwordHash = user.HashPassword(password);
+            User newUser = new User(email, passwordHash, userType);
+
+
+            using (StreamWriter writer = new StreamWriter("C:\\Users\\andre\\Documents\\Year3\\WebFrameworks\\RaceManager\\user.txt", true))
+            {
+                string userData = $"{newUser.Email},{newUser.Password},{newUser.Type}";
+                writer.WriteLine(userData); 
+            }
+            
+            Console.WriteLine("User registered successfully.");
+            return true;
+        }
+        public static bool Login(UserManager user)
+        {
+            Console.WriteLine("Enter email");
+            string email = Console.ReadLine();
+            Console.WriteLine("Enter password");
+            string password = Console.ReadLine();
+            bool login = user.LoginUser(email, password);
+            if (login)
+            {
+                Console.WriteLine("Successfully logged in");
+                return true;
+
+            }
+            return false;
+        }
         public bool LoginUser(string email, string password)
         {
-            string passwordHash = user.HashPassword(password);
-            foreach (string line in File.ReadLines(filePath))
+           
+            string passwordHash = HashPassword(password);
+            foreach (string line in File.ReadLines("C:\\Users\\andre\\Documents\\Year3\\WebFrameworks\\RaceManager\\user.txt"))
             {
                 string[] userData = line.Split(',');
                 if (userData[0] == email && userData[1] == passwordHash)
