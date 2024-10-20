@@ -420,10 +420,20 @@ namespace RaceManager
 
                             Console.WriteLine("Enter race name");
                             String race = Console.ReadLine();
-                            Console.WriteLine("Enter date and time (yyyy-MM-dd HH:mm:ss)");
+                            
+                            bool dateValid = false;
                             String date = Console.ReadLine();
+                            while (!dateValid)
+                            {
+                                Console.WriteLine("Enter date and time (yyyy-MM-dd HH:mm:ss)");
+                                date = Console.ReadLine();
+                                
+                                dateValid = validateTime(date);
+                                
+                            }
                             DateTime dateTime;
                             DateTime.TryParse(date, out dateTime);
+
                             Console.WriteLine("Would you like to add a list of horses to this Race? Yes/No");
                             String answer2 = Console.ReadLine();
 
@@ -509,10 +519,19 @@ namespace RaceManager
 
                         Console.WriteLine("Enter race name");
                         String race = Console.ReadLine();
-                        Console.WriteLine("Enter date and time (yyyy-MM-dd HH:mm:ss)");
+                        bool dateValid = false;
                         String date = Console.ReadLine();
+                        while (!dateValid)
+                        {
+                            Console.WriteLine("Enter date and time (yyyy-MM-dd HH:mm:ss)");
+                            date = Console.ReadLine();
+
+                            dateValid = validateTime(date);
+
+                        }
                         DateTime dateTime;
                         DateTime.TryParse(date, out dateTime);
+
                         Console.WriteLine("Would you like to add a list of horses to this Race? Yes/No");
                         String answer2 = Console.ReadLine();
 
@@ -566,6 +585,15 @@ namespace RaceManager
                         done = true;
                     }
                 }
+            static bool validateTime(string dateInString)
+            {
+                DateTime temp;
+                if (DateTime.TryParse(dateInString, out temp))
+                {
+                    return true;
+                }
+                return false;
+            }
         }
         }
     }

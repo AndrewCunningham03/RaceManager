@@ -56,6 +56,18 @@ namespace RaceManager
                 return Convert.ToBase64String(hashBytes);
             }
         }
-       
+
+        public override bool Equals(object? obj)
+        {
+            return obj is User user &&
+                   email == user.email &&
+                   password == user.password &&
+                   type == user.type;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(email, password, type);
+        }
     }
 }
