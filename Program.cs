@@ -590,7 +590,15 @@ namespace RaceManager
                 DateTime temp;
                 if (DateTime.TryParse(dateInString, out temp))
                 {
-                    return true;
+                    if(temp < DateTime.Now)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                   
                 }
                 return false;
             }
