@@ -45,7 +45,8 @@ namespace RaceManager
             string email = Console.ReadLine();
             Console.WriteLine("Enter password");
             string password = Console.ReadLine();
-            bool login = user.LoginUser(email, password);
+            User user1 = new User();
+            bool login = user.LoginUser(email, password, user1);
             if (login)
             {
                 Console.WriteLine("Successfully logged in");
@@ -54,7 +55,7 @@ namespace RaceManager
             }
             return false;
         }
-        public bool LoginUser(string email, string password)
+        public bool LoginUser(string email, string password, User user)
         {
            
             string passwordHash = HashPassword(password);
@@ -63,7 +64,14 @@ namespace RaceManager
                 string[] userData = line.Split(',');
                 if (userData[0] == email && userData[1] == passwordHash)
                 {
-                    return true; 
+                    if (int.TryParse(userData[2], out int userTypeInt))
+                    {
+                        
+                        this.Email = userData[0];
+                        this.Password = userData[1];
+                        this.UserType = userTypeInt; 
+                        return true;
+                    }
                 }
             }
             return false; 

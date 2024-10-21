@@ -135,7 +135,7 @@ namespace RaceManager
                                 {
                                     HorseOwnerMenu();
                                 }
-                                else
+                                else if(user.UserType == 3)
                                 {
                                     RaceManagerMenu();
                                 }
@@ -158,7 +158,7 @@ namespace RaceManager
                             {
                                 HorseOwnerMenu();
                             }
-                            else
+                            else if (user.UserType == 3)
                             {
                                 RaceManagerMenu();
                             }
@@ -584,14 +584,9 @@ namespace RaceManager
                 DateTime temp;
                 if (DateTime.TryParse(dateInString, out temp))
                 {
-                    if(temp < DateTime.Now)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+
+                    return true;
+           
                    
                 }
                 return false;

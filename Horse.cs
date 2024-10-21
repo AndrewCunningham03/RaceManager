@@ -60,7 +60,7 @@ namespace RaceManager
         }
         public override string ToString()
         {
-            return $"Horse name: {name}, Date of birth: {age.ToString()}, Horse ID: {horseID}, Owner: {owner}, Jockey: {jockey}";
+            return $"Horse name: {name}, Age: {age.ToString()}, Horse ID: {horseID}, Owner: {owner}, Jockey: {jockey}";
         }
 
         public override bool Equals(object? obj)
