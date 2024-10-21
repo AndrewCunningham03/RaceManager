@@ -12,36 +12,29 @@ namespace RaceManager
 {
     internal class User
     {
-        public enum UserType
-        {
-            Racegoer = 1,
-            HorseOwner = 2 ,
-            RaceManager = 3
-        }
+      
         private String email;
         private String password;
-        private UserType type;
+        private int userType;
 
         public string Email { get => email; set => email = value; }
         public string Password { get => password; set => password = value; }
-        internal UserType Type { get => type; set => type = value; }
+        public int UserType { get => userType; set => userType = value; }
 
         public User()
         {
-            email = "Unkown";
-            password = "Unkown";
-            type = UserType.Racegoer;
+
         }
 
-        public User(string email, string password, UserType type)
+        public User(string email, string password, int userType)
         {
             this.email = email;
             this.password = password;
-            this.type = type;
+            this.UserType = userType;
         }
         public override String ToString()
         {
-            return $"Email:{email}, Password:{password}, Type:{type}";
+            return $"Email:{email}, Password:{password}, Type:{userType}";
         }
 
         public string HashPassword(string password)
@@ -62,12 +55,12 @@ namespace RaceManager
             return obj is User user &&
                    email == user.email &&
                    password == user.password &&
-                   type == user.type;
+                   userType == user.userType;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(email, password, type);
+            return HashCode.Combine(email, password, userType);
         }
     }
 }

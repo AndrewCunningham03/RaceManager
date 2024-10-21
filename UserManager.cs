@@ -21,15 +21,18 @@ namespace RaceManager
 
             Console.WriteLine("Select user type (1: Racegoer, 2: Horse Owner, 3: Racecourse/Event Manager):");
             int userTypeInput = int.Parse(Console.ReadLine());
-            UserType userType = (UserType)(userTypeInput - 1);
+            if (userTypeInput > 3)
+            {
+                userTypeInput = 1;
+            }
 
             string passwordHash = user.HashPassword(password);
-            User newUser = new User(email, passwordHash, userType);
+            User newUser = new User(email, passwordHash, userTypeInput);
 
 
             using (StreamWriter writer = new StreamWriter("C:\\Users\\andre\\Documents\\Year3\\WebFrameworks\\RaceManager\\user.txt", true))
             {
-                string userData = $"{newUser.Email},{newUser.Password},{newUser.Type}";
+                string userData = $"{newUser.Email},{newUser.Password},{newUser.UserType}";
                 writer.WriteLine(userData); 
             }
             

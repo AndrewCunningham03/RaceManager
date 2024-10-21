@@ -127,20 +127,17 @@ namespace RaceManager
                         {
                             if (UserManager.Login(user))
                             {
-                                switch (user.Type)
+                                if (user.UserType == 1)
                                 {
-                                    case UserType.Racegoer:
-                                        RacegoerMenu();
-                                        break;
-                                    case UserType.HorseOwner:
-                                        HorseOwnerMenu();
-                                        break;
-                                    case UserType.RaceManager:
-                                        RaceManagerMenu();
-                                        break;
-                                    default:
-                                        Console.WriteLine("Unknown user type.");
-                                        break;
+                                    RacegoerMenu();
+                                }
+                                else if (user.UserType == 2)
+                                {
+                                    HorseOwnerMenu();
+                                }
+                                else
+                                {
+                                    RaceManagerMenu();
                                 }
                             }
                             else
@@ -153,20 +150,17 @@ namespace RaceManager
                     case 2:
                         if (UserManager.Login(user))
                         {
-                            switch (user.Type)
+                            if (user.UserType == 1)
                             {
-                                case UserType.Racegoer:
-                                    RacegoerMenu();
-                                    break;
-                                case UserType.HorseOwner:
-                                    HorseOwnerMenu();
-                                    break;
-                                case UserType.RaceManager:
-                                    RaceManagerMenu();
-                                    break;
-                                default:
-                                    Console.WriteLine("Unknown user type.");
-                                    break;
+                                RacegoerMenu();
+                            }
+                            else if (user.UserType == 2)
+                            {
+                                HorseOwnerMenu();
+                            }
+                            else
+                            {
+                                RaceManagerMenu();
                             }
                         }
                         else
@@ -276,7 +270,7 @@ namespace RaceManager
             static void HorseOwnerMenu()
             {
                 AllEvents();
-                Console.WriteLine("Enter name of event you would like to your horse to");
+                Console.WriteLine("Enter name of event you would like to add your horse to");
                 String eventName = Console.ReadLine();
                 Event selectedEvent = events.FirstOrDefault(x => x.Name.ToLower() == eventName.ToLower());
                 if (selectedEvent == null)
